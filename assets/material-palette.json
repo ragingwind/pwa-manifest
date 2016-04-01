@@ -1,12 +1,16 @@
 {
+  "ansiable": {
+    "red": "red",
+    "magenta": "purple",
+    "blue": "light blue",
+    "green": "light green",
+    "cyan": "cyan",
+    "yellow": "amber",
+    "gray": "grey"
+  },
   "red": {
     "dark-primary": "#D32F2F",
     "primary": "#F44336",
-    "text": "#FFFFFF",
-  },
-  "pink": {
-    "dark-primary": "#C2185B",
-    "primary": "#E91E63",
     "text": "#FFFFFF"
   },
   "purple": {
