@@ -1,6 +1,6 @@
 # pwa-manifest [![Build Status](https://travis-ci.org/ragingwind/pwa-manifest.svg?branch=master)](https://travis-ci.org/ragingwind/pwa-manifest)
 
-> My priceless module
+> Create a Web Manifest for Progressive Manifest with a variety of options
 
 
 ## Install
