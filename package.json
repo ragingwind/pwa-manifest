@@ -1,0 +1,45 @@
+{
+  "name": "pwa-manifest",
+  "version": "0.0.0",
+  "description": "Create a Web Manifest for Progressive Manifest with a variety of options",
+  "license": "MIT",
+  "repository": "ragingwind/pwa-manifest",
+  "author": {
+    "name": "ragingwind",
+    "email": "ragingwind@gmail.com",
+    "url": "ragingwind.html"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "pwa",
+    "manifest",
+    "Progressive Web App",
+    "Web Manifest"
+  ],
+  "dependencies": {
+    "ansi-styles": "^2.2.1",
+    "inquirer": "^0.12.0",
+    "is-css-color-hex": "^0.2.0",
+    "is-css-color-name": "^0.1.3",
+    "is-url-superb": "^2.0.0",
+    "object-assign": "^4.0.1"
+  },
+  "devDependencies": {
+    "ava": "^0.12.0",
+    "http-server": "^0.9.0",
+    "xo": "^0.12.1"
+  },
+  "xo": {
+    "rules": {
+      "camelcase": 0
+    }
+  }
+}
