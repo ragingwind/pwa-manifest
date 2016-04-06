@@ -2,6 +2,7 @@
 
 const oassign = require('object-assign');
 const path = require('path');
+const fs = require('fs');
 const isUrl = require('is-url-superb');
 const isCssVal = function (v) {
 	return require('is-css-color-hex')(v) || require('is-css-color-name')(v);
@@ -58,7 +59,7 @@ module.exports = function (opts) {
 			const pkg = require(path.join(process.cwd, 'pakcage.json'));
 			if (pkg && pkg.name) {
 				opts.name = pkg.name;
-				opts.short_name = shortize(pkg.name);
+				opts.short_name = pkg.name;
 			}
 		}
 	}).then(function () {
@@ -87,8 +88,21 @@ module.exports = function (opts) {
 		}
 	}).then(function () {
 		oassign(manifest, opts);
+
+		manifest.short_name = shortize(manifest.short_name);
+
 		return manifest;
 	});
 
 	return v;
+};
+
+module.exports.write = function (dest, manifest) {
+	const data = JSON.stringify(manifest);
+	return fs.writeFileSync(path.join(dest, 'manifest.json'), data, 'utf8');
+};
+
+module.exports.read = function (src) {
+	const data = fs.readFileSync(path.join(src, 'manifest.json'), 'utf8');
+	return JSON.parse(data);
 };
