@@ -1,6 +1,6 @@
 {
   "name": "pwa-manifest",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Create a Web Manifest for Progressive Manifest with a variety of options",
   "license": "MIT",
   "repository": "ragingwind/pwa-manifest",
