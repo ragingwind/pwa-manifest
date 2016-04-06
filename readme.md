@@ -1,6 +1,6 @@
 # pwa-manifest [![Build Status](https://travis-ci.org/ragingwind/pwa-manifest.svg?branch=master)](https://travis-ci.org/ragingwind/pwa-manifest)
 
-> Create a Web Manifest for Progressive Manifest with a variety of options
+> Create a Web Manifest for Progressive Web App with a variety of options
 
 
 ## Install
@@ -37,7 +37,7 @@ pwaManifest({
 
 Type: `object`
 
-Web Manifest properties you want to set. if not, manifest will be generated with default value of members as follow.
+Web Manifest properties you want to set. if not, manifest will be generated with default value of members coming over from [manifest.json](https://github.com/PolymerLabs/progressive-webapp-config/blob/master/app/manifest.json)
 
 ```
 {
