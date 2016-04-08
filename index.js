@@ -56,7 +56,7 @@ module.exports = function (opts) {
 
 	var v = validators(function () {
 		if (!opts.name) {
-			const pkg = require(path.join(process.cwd, 'pakcage.json'));
+			const pkg = require(path.join(process.cwd(), 'pakcage.json'));
 			if (pkg && pkg.name) {
 				opts.name = pkg.name;
 				opts.short_name = pkg.name;
