@@ -74,11 +74,11 @@ module.exports = function (opts) {
 };
 
 module.exports.write = function (dir, manifest) {
-	return writeJSON(manifestDir(dir), JSON.stringify(manifest));
+	return writeJSON(manifestDir(dir), manifest);
 };
 
 module.exports.write.sync = function (dir, manifest) {
-	return writeJSON.sync(manifestDir(dir), JSON.stringify(manifest));
+	return writeJSON.sync(manifestDir(dir), manifest);
 };
 
 module.exports.read = function (dir) {
