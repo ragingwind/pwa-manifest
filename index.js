@@ -66,7 +66,7 @@ module.exports = function (opts) {
 	return readPkgUp().then(res => {
 		opts = validate(opts, res.pkg);
 	})
-	.then(() => loadJSON('./assets/manifest.json'))
+	.then(() => loadJSON(path.join(__dirname, './assets/manifest.json')))
 	.then(manifest => {
 		oassign(manifest, opts);
 		return manifest;
