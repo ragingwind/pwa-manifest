@@ -82,7 +82,7 @@ module.exports.write.sync = function (dir, manifest) {
 };
 
 module.exports.read = function (dir) {
-	return loadJSON(manifestDir(dir)).then(manifest => JSON.parse(manifest));
+	return loadJSON(manifestDir(dir));
 };
 
 module.exports.read.sync = function (dir) {
