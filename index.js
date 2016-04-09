@@ -2,8 +2,9 @@
 
 const oassign = require('object-assign');
 const path = require('path');
-const fs = require('fs');
-const isUrl = require('is-url-superb');
+const writeJSON = require('write-json-file');
+const loadJSON = require('load-json-file');
+const readPkgUp = require('read-pkg-up');
 const isCssVal = function (v) {
 	return require('is-css-color-hex')(v) || require('is-css-color-name')(v);
 };
@@ -49,46 +50,44 @@ function shortize(name) {
 	return name.slice(0, 12);
 }
 
+function manifestDir(dir) {
+	return path.join(dir, 'manifest.json');
+}
+
 module.exports = function (opts) {
 	const manifest = require('./assets/manifest.json');
 
-	oassign({}, opts);
+	opts = oassign({}, opts);
 
-	var v = validators(function () {
-		if (!opts.name) {
-			const pkg = require(path.join(process.cwd(), 'pakcage.json'));
-			if (pkg && pkg.name) {
-				opts.name = pkg.name;
-				opts.short_name = pkg.name;
-			}
-		}
-	}).then(function () {
-		if (opts.start_url && !isUrl(opts.start_url)) {
-			return new MemberError('start_url', opts.start_url);
-		}
-	}).then(function () {
+	var v = validators(() => {
 		if (opts.background_color && !isCssVal(opts.background_color)) {
 			return new MemberError('background_color', opts.background_color);
 		}
-	}).then(function () {
+	}).then(() => {
 		if (opts.theme_color && !isCssVal(opts.theme_color)) {
 			return new MemberError('theme_color', opts.theme_color);
 		}
-	}).then(function () {
+	}).then(() => {
 		if (opts.dir && !existMemberValue('dir', opts.dir)) {
 			return new MemberError('dir', opts.dir);
 		}
-	}).then(function () {
+	}).then(() => {
 		if (opts.display && !existMemberValue('display', opts.display)) {
 			return new MemberError('display', opts.display);
 		}
-	}).then(function () {
+	}).then(() => {
 		if (opts.orientation && !existMemberValue('orientation', opts.orientation)) {
 			return new MemberError('orientation', opts.orientation);
 		}
-	}).then(function () {
-		oassign(manifest, opts);
+	}).then(() => {
+		return readPkgUp();
+	}).then(res => {
+		if (!opts.name && res.pkg) {
+			opts.name = res.pkg.name;
+			opts.short_name = res.pkg.name;
+		}
 
+		oassign(manifest, opts);
 		manifest.short_name = shortize(manifest.short_name);
 
 		return manifest;
@@ -97,12 +96,18 @@ module.exports = function (opts) {
 	return v;
 };
 
-module.exports.write = function (dest, manifest) {
-	const data = JSON.stringify(manifest);
-	return fs.writeFileSync(path.join(dest, 'manifest.json'), data, 'utf8');
+module.exports.write = function (dir, manifest) {
+	return writeJSON(manifestDir(dir), JSON.stringify(manifest));
 };
 
-module.exports.read = function (src) {
-	const data = fs.readFileSync(path.join(src, 'manifest.json'), 'utf8');
-	return JSON.parse(data);
+module.exports.write.sync = function (dir, manifest) {
+	return writeJSON.sync(manifestDir(dir), JSON.stringify(manifest));
+};
+
+module.exports.read = function (dir) {
+	return loadJSON(manifestDir(dir)).then(manifest => JSON.parse(manifest));
+};
+
+module.exports.read.sync = function (dir) {
+	return JSON.parse(loadJSON.sync(manifestDir(dir)));
 };

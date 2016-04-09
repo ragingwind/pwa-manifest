@@ -1,6 +1,6 @@
 # pwa-manifest [![Build Status](https://travis-ci.org/ragingwind/pwa-manifest.svg?branch=master)](https://travis-ci.org/ragingwind/pwa-manifest)
 
-> Create a Web Manifest for Progressive Web App with a variety of options
+> Creating a Web Manifest for Progressive Web App with a variety of options
 
 
 ## Install
@@ -83,13 +83,21 @@ Web Manifest properties you want to set. if not, manifest will be generated with
 }
 ```
 
-### pwaManifest.write(destPath, manifest)
+### pwaManifest.write(dir, manifest)
 
-Write a manifest file to dest path
+Returns a promise.
 
-### pwaManifest.read(srcPath)
+### pwaManifest.write.sync(dir, manifest)
 
-Read a manifest file to dest path
+Write a manifest file as `manifest.json` to dest path.
+
+### pwaManifest.read(dir)
+
+Returns a promise.
+
+### pwaManifest.read.sync(dir)
+
+Read a manifest file in the name of `manifest.json` to src path
 
 ## License
 

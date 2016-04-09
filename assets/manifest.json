@@ -36,6 +36,7 @@
   }],
   "start_url": "/index.html?homescreen=1",
   "display": "standalone",
+  "orientation": "natural",
   "background_color": "#FFFFFF",
   "theme_color": "#3F51B5"
 }

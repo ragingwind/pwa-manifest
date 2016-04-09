@@ -1,5 +1,7 @@
 {
   "lang": "en-US",
+  "display": "standalone",
+  "orientation": "natural",
   "splash_screens": [{
     "src": "splash/lowres",
     "sizes": "320x240"

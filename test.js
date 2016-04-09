@@ -18,7 +18,7 @@ function isIconProp(icon, src, size) {
 }
 
 test('generate a manifest', t => {
-	return pwaManifest(opts).then(function (manifest) {
+	return pwaManifest(opts).then(manifest => {
 		t.is(manifest.name, opts.name);
 		t.is(manifest.short_name, 'My Short PWA');
 		t.is(manifest.icons.length, 8);
@@ -36,9 +36,19 @@ test('generate a manifest', t => {
 	});
 });
 
+test('generate a manifest with the name assigning from pkg', t => {
+	return pwaManifest({}).then(manifest => {
+		t.is(manifest.name, 'pwa-manifest');
+		t.is(manifest.short_name, 'pwa-manifest');
+	});
+});
+
 test('read a manifest', t => {
-	return pwaManifest(opts).then(function (manifest) {
-		pwaManifest.write(tmpdir, manifest);
-		t.ok(deepEqual(manifest, pwaManifest.read(tmpdir)));
+	return pwaManifest(opts).then(manifest => {
+		return pwaManifest.write(tmpdir, manifest).then(() => {
+			return pwaManifest.read(tmpdir).then(loadManifest => {
+				t.ok(deepEqual(manifest, loadManifest));
+			});
+		});
 	});
 });
