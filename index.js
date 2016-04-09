@@ -5,49 +5,55 @@ const path = require('path');
 const writeJSON = require('write-json-file');
 const loadJSON = require('load-json-file');
 const readPkgUp = require('read-pkg-up');
-const isCssVal = function (v) {
-	return require('is-css-color-hex')(v) || require('is-css-color-name')(v);
-};
+const isCssColorHex = require('is-css-color-hex');
+const isCssColorName = require('is-css-color-name');
 
-const MEMBERS_VALUES = {
-	dir: ['ltr', 'rtl', 'auto'],
-	icons: ['72', '96', '128', '144', '152', '192', '384', '512'],
-	displays: ['fullscreen', 'standalone', 'minimal-ui', 'browser'],
-	orientation: [
-		'any', 'natural', 'landscape', 'landscape-primary',
-		'landscape-secondary', 'portrait', 'portrait-primary',
-		'portrait-secondary'
-	]
-};
+function validate(vals, pkg) {
+	const presets = {
+		dir: ['ltr', 'rtl', 'auto'],
+		icons: ['72', '96', '128', '144', '152', '192', '384', '512'],
+		display: ['fullscreen', 'standalone', 'minimal-ui', 'browser'],
+		orientation: [
+			'any', 'natural', 'landscape', 'landscape-primary',
+			'landscape-secondary', 'portrait', 'portrait-primary',
+			'portrait-secondary'
+		]
+	};
+	const err = m => new Error(m + ' has an invalid value: ' + vals[m]);
+	const hasPreset = (m, v) => presets[m].indexOf(v) >= 0;
+	const isCssColorVal = v => isCssColorHex(v) || isCssColorName(v);
+	const shortize = name => name.slice(0, 12);
 
-function existMemberValue(m, v) {
-	return MEMBERS_VALUES[m] && MEMBERS_VALUES[m].indexOf(v) >= 0;
-}
+	if (vals.display && !hasPreset('display', vals.display)) {
+		throw err('display');
+	}
 
-function MemberError(m, v) {
-	this.name = 'OptionsError';
-	this.message = m + ' option has an invalid value: ' + v;
-	this.stack = (new Error()).stack;
-}
+	if (vals.orientation && !hasPreset('orientation', vals.orientation)) {
+		throw err('orientation');
+	}
 
-MemberError.prototype = Object.create(Error.prototype);
-MemberError.prototype.constructor = MemberError;
+	if (!vals.name && pkg) {
+		vals.name = pkg.name;
+		vals.short_name = pkg.name;
+	}
 
-function validators(validator) {
-	var p = new Promise(function (resolve, reject) {
-		const res = validator();
-		if (res instanceof Error) {
-			reject(res);
-		} else {
-			resolve(res);
-		}
-	});
+	if (vals.short_name) {
+		vals.short_name = shortize(vals.short_name);
+	}
 
-	return p;
-}
+	if (vals.background_color && !isCssColorVal(vals.background_color)) {
+		throw err('background_color');
+	}
 
-function shortize(name) {
-	return name.slice(0, 12);
+	if (vals.theme_color && !isCssColorVal(vals.theme_color)) {
+		throw err('theme_color');
+	}
+
+	if (vals.dir && !hasPreset('dir', vals.dir)) {
+		throw err('dir');
+	}
+
+	return vals;
 }
 
 function manifestDir(dir) {
@@ -55,45 +61,16 @@ function manifestDir(dir) {
 }
 
 module.exports = function (opts) {
-	const manifest = require('./assets/manifest.json');
-
 	opts = oassign({}, opts);
 
-	var v = validators(() => {
-		if (opts.background_color && !isCssVal(opts.background_color)) {
-			return new MemberError('background_color', opts.background_color);
-		}
-	}).then(() => {
-		if (opts.theme_color && !isCssVal(opts.theme_color)) {
-			return new MemberError('theme_color', opts.theme_color);
-		}
-	}).then(() => {
-		if (opts.dir && !existMemberValue('dir', opts.dir)) {
-			return new MemberError('dir', opts.dir);
-		}
-	}).then(() => {
-		if (opts.display && !existMemberValue('display', opts.display)) {
-			return new MemberError('display', opts.display);
-		}
-	}).then(() => {
-		if (opts.orientation && !existMemberValue('orientation', opts.orientation)) {
-			return new MemberError('orientation', opts.orientation);
-		}
-	}).then(() => {
-		return readPkgUp();
-	}).then(res => {
-		if (!opts.name && res.pkg) {
-			opts.name = res.pkg.name;
-			opts.short_name = res.pkg.name;
-		}
-
+	return readPkgUp().then(res => {
+		opts = validate(opts, res.pkg);
+	})
+	.then(() => loadJSON('./assets/manifest.json'))
+	.then(manifest => {
 		oassign(manifest, opts);
-		manifest.short_name = shortize(manifest.short_name);
-
 		return manifest;
 	});
-
-	return v;
 };
 
 module.exports.write = function (dir, manifest) {
@@ -109,5 +86,5 @@ module.exports.read = function (dir) {
 };
 
 module.exports.read.sync = function (dir) {
-	return JSON.parse(loadJSON.sync(manifestDir(dir)));
+	return loadJSON.sync(manifestDir(dir));
 };

@@ -10,7 +10,7 @@ const opts = {
 	start_url: '/main.html?homescreen=1',
 	display: 'standalone',
 	background_color: '#EFEFEF',
-	theme_color: 'FFEEFF'
+	theme_color: '#FFEEFF'
 };
 
 function isIconProp(icon, src, size) {
