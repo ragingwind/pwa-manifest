@@ -47,7 +47,6 @@ test('read a manifest', t => {
 	return pwaManifest(opts).then(manifest => {
 		return pwaManifest.write(tmpdir, manifest).then(() => {
 			return pwaManifest.read(tmpdir).then(loadManifest => {
-				console.log(loadManifest);
 				t.ok(deepEqual(manifest, loadManifest));
 			});
 		});
