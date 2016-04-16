@@ -31,13 +31,13 @@ pwaManifest({
 
 ## API
 
-### pwaManifest(options)
+### pwaManifest([options])
 
 #### options
 
 Type: `object`
 
-Web Manifest properties you want to set. if not, manifest will be generated with default value of members coming over from [manifest.json](https://github.com/PolymerLabs/progressive-webapp-config/blob/master/app/manifest.json)
+Web Manifest properties you want to set. The name of options are same as member property of Web Manifest. if not, manifest will be generated with default value of members coming over from [manifest.json](https://github.com/PolymerLabs/progressive-webapp-config/blob/master/app/manifest.json)
 
 ```
 {
