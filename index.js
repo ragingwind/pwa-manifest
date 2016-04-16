@@ -32,7 +32,7 @@ function validate(vals, pkg) {
 		throw err('orientation');
 	}
 
-	if (!vals.name && pkg) {
+	if (!vals.name && pkg && pkg.name) {
 		vals.name = pkg.name;
 		vals.short_name = pkg.name;
 	}
@@ -63,7 +63,7 @@ function manifestDir(dir) {
 module.exports = function (opts) {
 	opts = oassign({}, opts);
 
-	return readPkgUp().then(res => {
+	return readPkgUp({}).then(res => {
 		opts = validate(opts, res.pkg);
 	})
 	.then(() => loadJSON(path.join(__dirname, './assets/manifest.json')))
