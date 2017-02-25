@@ -21,7 +21,7 @@ pwaManifest({
 	start_url: '/index.html?homescreen=1',
 	display: 'standalone',
 	background_color: '#EFEFEF',
-	theme_color: 'FFEEFF'
+	theme_color: '#FFEEFF'
 }).then(function (manifest) {
 	// dump new generated manifest file if you want
 	pwaManifest.write('./', manifest);
