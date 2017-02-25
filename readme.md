@@ -37,39 +37,18 @@ pwaManifest({
 
 Type: `object`
 
-Web Manifest properties you want to set. The name of options are same as member property of Web Manifest. if not, manifest will be generated with default value of members coming over from [manifest.json](https://github.com/PolymerLabs/progressive-webapp-config/blob/master/app/manifest.json)
-
+Web Manifest properties you want to set. The name of options are same as member property of Web Manifest. Icons sizes are followed in [lighthouse audits](https://github.com/GoogleChrome/lighthouse/tree/9f91ab405ca89882f40a71c6aef5dc6dc08543b4/lighthouse-core/audits)
 ```
 {
   "name": "My Powerful Progressive Web App",
   "short_name": "PWApp",
   "icons": [{
-    "src": "icon-72x72.png",
-    "sizes": "72x72",
-    "type": "image/png"
-  }, {
-    "src": "icon-96x96.png",
-    "sizes": "96x96",
-    "type": "image/png"
-  }, {
-    "src": "icon-128x128.png",
-    "sizes": "128x128",
-    "type": "image/png"
-  }, {
-    "src": "ms-touch-icon-144x144-precomposed.png",
+    "src": "icon-144x144.png",
     "sizes": "144x144",
     "type": "image/png"
   }, {
-    "src": "apple-touch-icon-152x152.png",
-    "sizes": "152x152",
-    "type": "image/png"
-  }, {
-    "src": "chrome-touch-icon-192x192.png",
+    "src": "icon-192x192.png",
     "sizes": "192x192",
-    "type": "image/png"
-  }, {
-    "src": "chrome-splashscreen-icon-384x384.png",
-    "sizes": "384x384",
     "type": "image/png"
   }, {
     "src": "icon-512x512.png",
