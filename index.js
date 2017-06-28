@@ -1,7 +1,7 @@
 'use strict';
 
-const oassign = require('object-assign');
 const path = require('path');
+const oassign = require('object-assign');
 const writeJSON = require('write-json-file');
 const loadJSON = require('load-json-file');
 const readPkgUp = require('read-pkg-up');
