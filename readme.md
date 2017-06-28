@@ -6,14 +6,14 @@
 ## Install
 
 ```
-$ npm install --save pwa-manifest
+$ npm install --save @pwa/manifest
 ```
 
 
 ## Usage
 
 ```js
-const pwaManifest = require('pwa-manifest');
+const pwaManifest = require('manifest');
 
 pwaManifest({
 	name: 'My PWApp',
