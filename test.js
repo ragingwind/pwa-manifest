@@ -18,24 +18,22 @@ function isIconProp(icon, src, size) {
 }
 
 test('generate a manifest', async t => {
-	await pwaManifest(opts).then(manifest => {
-		t.is(manifest.name, opts.name);
-		t.is(manifest.short_name, 'My Short PWA');
-		t.is(manifest.icons.length, 3);
-		t.true(isIconProp(manifest.icons[0], 'icon-144x144.png', 144));
-		t.true(isIconProp(manifest.icons[1], 'icon-192x192.png', 192));
-		t.true(isIconProp(manifest.icons[2], 'icon-512x512.png', 512));
-		t.is(manifest.start_url, opts.start_url);
-		t.is(manifest.background_color, opts.background_color);
-		t.is(manifest.theme_color, opts.theme_color);
-	});
+	const manifest = await pwaManifest(opts);
+	t.is(manifest.name, opts.name);
+	t.is(manifest.short_name, 'My Short PWA');
+	t.is(manifest.icons.length, 3);
+	t.true(isIconProp(manifest.icons[0], 'icon-144x144.png', 144));
+	t.true(isIconProp(manifest.icons[1], 'icon-192x192.png', 192));
+	t.true(isIconProp(manifest.icons[2], 'icon-512x512.png', 512));
+	t.is(manifest.start_url, opts.start_url);
+	t.is(manifest.background_color, opts.background_color);
+	t.is(manifest.theme_color, opts.theme_color);
 });
 
 test('generate a manifest with the name assigning from pkg', async t => {
-	await pwaManifest({}).then(manifest => {
-		t.is(manifest.name, '@pwa/manifest');
-		t.is(manifest.short_name, '@pwa/manifes');
-	});
+	const manifest = await pwaManifest({});
+	t.is(manifest.name, '@pwa/manifest');
+	t.is(manifest.short_name, '@pwa/manifes');
 });
 
 test('read a manifest', async t => {

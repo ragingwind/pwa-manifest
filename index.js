@@ -1,12 +1,12 @@
 'use strict';
 
 const path = require('path');
-const oassign = require('object-assign');
 const writeJSON = require('write-json-file');
 const loadJSON = require('load-json-file');
 const readPkgUp = require('read-pkg-up');
 const isCssColorHex = require('is-css-color-hex');
 const isCssColorName = require('is-css-color-name');
+const decamelizeKeys = require('decamelize-keys');
 
 function validate(vals, pkg) {
 	const presets = {
@@ -60,17 +60,13 @@ function manifestDir(dir) {
 	return path.join(dir, 'manifest.json');
 }
 
-module.exports = function (opts) {
-	opts = oassign({}, opts);
+module.exports = async function (opts) {
+	const res = await readPkgUp({});
 
-	return readPkgUp({}).then(res => {
-		opts = validate(opts, res.pkg);
-	})
-	.then(() => loadJSON(path.join(__dirname, './assets/manifest.json')))
-	.then(manifest => {
-		oassign(manifest, opts);
-		return manifest;
-	});
+	opts = Object.assign({}, decamelizeKeys(opts, '_'));
+	opts = validate(opts, res && res.pkg);
+
+	return Object.assign(await loadJSON(path.join(__dirname, './assets/manifest.json')), opts);
 };
 
 module.exports.write = function (dir, manifest) {
