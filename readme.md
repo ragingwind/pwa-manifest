@@ -28,6 +28,19 @@ pwaManifest({
 });
 ```
 
+or we support decamelize from camelize properties
+
+```js
+pwaManifest({
+	name: 'My PWApp',
+	shortName: 'My Short PWA Name',
+	startUrl: '/index.html?homescreen=1',
+	display: 'standalone',
+	backgroundColor: '#EFEFEF',
+	themeColor: '#FFEEFF'
+});
+```
+
 
 ## API
 
