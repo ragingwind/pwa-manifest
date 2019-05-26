@@ -82,7 +82,7 @@ Web Manifest properties you want to set. The name of options are same as member 
 
 Returns a promise.
 
-### pwaManifest.writeSsync(dir, manifest)
+### pwaManifest.writeSync(dir, manifest)
 
 Write a manifest file as `manifest.json` to dest path.
 
