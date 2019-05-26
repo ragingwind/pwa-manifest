@@ -69,11 +69,20 @@ module.exports = async function (opts) {
 	return Object.assign(await loadJSON(path.join(__dirname, './assets/manifest.json')), opts);
 };
 
+module.exports.sync = function (opts) {
+	const res = readPkgUp.sync({});
+
+	opts = Object.assign({}, decamelizeKeys(opts, '_'));
+	opts = validate(opts, res && res.pkg);
+
+	return Object.assign(loadJSON.sync(path.join(__dirname, './assets/manifest.json')), opts);
+};
+
 module.exports.write = function (dir, manifest) {
 	return writeJSON(manifestDir(dir), manifest);
 };
 
-module.exports.write.sync = function (dir, manifest) {
+module.exports.writeSync = function (dir, manifest) {
 	return writeJSON.sync(manifestDir(dir), manifest);
 };
 
@@ -81,6 +90,6 @@ module.exports.read = function (dir) {
 	return loadJSON(manifestDir(dir));
 };
 
-module.exports.read.sync = function (dir) {
+module.exports.readSync = function (dir) {
 	return loadJSON.sync(manifestDir(dir));
 };

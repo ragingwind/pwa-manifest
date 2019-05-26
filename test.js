@@ -36,9 +36,22 @@ test('generate a manifest with the name assigning from pkg', async t => {
 	t.is(manifest.short_name, '@pwa/manifes');
 });
 
+test('generate a manifest synchronized with the name assigning from pkg', t => {
+	const manifest = pwaManifest.sync({});
+	t.is(manifest.name, '@pwa/manifest');
+	t.is(manifest.short_name, '@pwa/manifes');
+});
+
 test('read a manifest', async t => {
 	const manifest = await pwaManifest(opts);
 	await pwaManifest.write(tmpdir, manifest);
 	const loadManifest = await pwaManifest.read(tmpdir);
+	t.true(deepEqual(manifest, loadManifest));
+});
+
+test('read a manifest in sync', t => {
+	const manifest = pwaManifest.sync(opts);
+	pwaManifest.writeSync(tmpdir, manifest);
+	const loadManifest = pwaManifest.readSync(tmpdir);
 	t.true(deepEqual(manifest, loadManifest));
 });

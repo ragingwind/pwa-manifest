@@ -15,30 +15,33 @@ $ npm install --save @pwa/manifest
 ```js
 const pwaManifest = require('@pwa/manifest');
 
-pwaManifest({
-	name: 'My PWApp',
-	short_name: 'My Short PWA Name',
-	start_url: '/index.html?homescreen=1',
-	display: 'standalone',
-	background_color: '#EFEFEF',
-	theme_color: '#FFEEFF'
-}).then(function (manifest) {
+(async () => {
+	const manifest = await pwaManifest({
+		name: 'My PWApp',
+		short_name: 'My Short PWA Name',
+		start_url: '/index.html?homescreen=1',
+		display: 'standalone',
+		background_color: '#EFEFEF',
+		theme_color: '#FFEEFF'
+	})
 	// dump new generated manifest file if you want
-	pwaManifest.write('./', manifest);
-});
+	await pwaManifest.write('./', manifest);
+})();
 ```
 
-or we support decamelize from camelize properties
+or we support decamelizing from camelized properties
 
 ```js
-pwaManifest({
-	name: 'My PWApp',
-	shortName: 'My Short PWA Name',
-	startUrl: '/index.html?homescreen=1',
-	display: 'standalone',
-	backgroundColor: '#EFEFEF',
-	themeColor: '#FFEEFF'
-});
+(async () => {
+	const manifest = await pwaManifest({
+		name: 'My PWApp',
+		shortName: 'My Short PWA Name',
+		startUrl: '/index.html?homescreen=1',
+		display: 'standalone',
+		backgroundColor: '#EFEFEF',
+		themeColor: '#FFEEFF'
+	});
+})();
 ```
 
 
@@ -79,7 +82,7 @@ Web Manifest properties you want to set. The name of options are same as member 
 
 Returns a promise.
 
-### pwaManifest.write.sync(dir, manifest)
+### pwaManifest.writeSsync(dir, manifest)
 
 Write a manifest file as `manifest.json` to dest path.
 
@@ -87,7 +90,7 @@ Write a manifest file as `manifest.json` to dest path.
 
 Returns a promise.
 
-### pwaManifest.read.sync(dir)
+### pwaManifest.readSync(dir)
 
 Read a manifest file in the name of `manifest.json` to src path
 
